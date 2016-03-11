@@ -5,6 +5,17 @@ Logika pre informatikov
 
 [Inštrukcie na odovzdávanie riešení](docs/odovzdavanie.md).
 
+Priebežné hodnotenie
+--------------------
+Prehľad o vašom priebežnom bodovom hodnotení nájdete v súbore `report.md`
+vo vetve `report` vo vašich repozitároch. Priame URL je (nezabudnite
+nahradiť `‹LOGIN›` za svoje prihlasovacie meno):
+
+    https://github.com/FMFI-UK-1-AIN-412/lpi18-‹LOGIN›/blob/report/report.md
+
+Ak si toto pozeráte vo svojom repozitári, funguje aj tento
+[odkaz](../../blob/report/report.md).
+
 Sady úloh
 ---------
 
