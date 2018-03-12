@@ -14,6 +14,7 @@ Sady úloh
   a [praktická časť (formula)](cvicenia/cv02) 
 * Sada úloh 3: [teoretická časť (výrokové vyplývanie a ekvivalencia)](ulohy/su03.pdf)
   a [praktická časť (Sudoku)](cvicenia/cv03)
+* Sada úloh 4: [teoretická časť (CNF a tablá)](ulohy/su04.pdf)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
