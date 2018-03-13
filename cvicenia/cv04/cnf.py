@@ -1,19 +1,22 @@
+from typing import Mapping, Union, TextIO
+Valuation = Mapping[str, bool]
+
 class Literal(object):
     """ Reprezentacia literalu (premenna alebo negovana premenna) v CNF formule. """
-    def __init__(self, name):
+    def __init__(self, name : str) -> None:
         """ Vytvori novy, kladny (nenegovany) literal pre premennu name. """
         self.name = name
         self.neg = False
 
     @staticmethod
-    def Not(name):
+    def Not(name : str) -> 'Literal':
         """ Vytvory novy, negovany literal pre premennu name. """
         lit = Literal(name)
         lit.neg = True
         return lit
 
     @staticmethod
-    def fromInt(i, varMap):
+    def fromInt(i : int, varMap : Union['VariableMap', Mapping[int, str]]) -> 'Literal':
         """ Vytvori novy literal podla ciselneho kodu a mapovania. """
         if isinstance(varMap, VariableMap):
             lit = Literal(varMap.reverse()[abs(i)])
@@ -23,7 +26,7 @@ class Literal(object):
             lit.neg = True
         return lit
 
-    def __neg__(self):
+    def __neg__(self) -> 'Literal':
         """ Vrati novy literal, ktory je negaciou tohoto.
 
         Toto je specialna metoda, ktoru python zavola, ked
@@ -35,25 +38,25 @@ class Literal(object):
         lit.neg = not self.neg
         return lit
 
-    def toString(self):
+    def toString(self) -> str:
         """ Vrati textovu reprezentaciu tohoto literalu. """
         if self.neg:
             return "-" + self.name
         else:
             return self.name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.toString()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__class__.__name__ + '(' + self.toString() + ')'
 
 
-    def isSatisfied(self, v):
+    def isSatisfied(self, v : Valuation) -> bool:
         """ Urci, ci je tento literal splneny ohodnotenim v. """
-        return bool(self.neg) ^ bool(v[self.name])
+        return bool(bool(self.neg) ^ bool(v[self.name]))
 
-    def writeToFile(self, outFile, varMap):
+    def writeToFile(self, outFile : TextIO, varMap : 'VariableMap'):
         """ Zapise literal do suboru outFile s pouzitim mapovania premennych varMap. """
         if self.neg:
             outFile.write('-%d' % varMap[self.name])
@@ -75,14 +78,14 @@ class VariableMap(dict):
         self[key] = self._varNumMax
         return self._varNumMax
 
-    def reverse(self):
+    def reverse(self) -> Mapping[int, str]:
         """ Vrati reverzne mapovanie ako jednoduchy slovnik z cisel na mena premennych. """
         rev = {}
         for k,v in self.items():
             rev[v] = k
         return rev
 
-    def extend(self, what):
+    def extend(self, what : Union[str, Literal, 'Cnf', 'Clause']):
         """ Rozsiri tuto mapu o premenne v danej cnf / klauze / literale. """
         if isinstance(what, str):
             self[what]
@@ -92,7 +95,7 @@ class VariableMap(dict):
             for x in what:
                 self.extend(x)
 
-    def writeToFile(self, outFile, prefix=''):
+    def writeToFile(self, outFile : TextIO, prefix : str = ''):
         """ Zapise mapu do suboru outFile.
 
         Jedna premenna na jeden riadok (t.j. nefunguje na premenne
@@ -107,14 +110,14 @@ class VariableMap(dict):
             outFile.write('%s%s\n' % (prefix, rev[i+1]))
 
     @staticmethod
-    def readFromFile(inFile, prefix=''):
+    def readFromFile(inFile : TextIO, prefix : str = '') -> 'VariableMap':
         """ Nacita novu mapu zo suboru inFile a vrati ju.
 
         Ak je uvedeny volitelny retazec prefix, tento sa odstrani
         zo zaciatku kazdeho riadku (napriklad 'c ' ak je mapa ulozena
         ako komentar v dimacs cnf formate).
         """
-        def removePrefix(s):
+        def removePrefix(s : str) -> str:
             """Remove a prefix from string if present."""
             return s[len(prefix):] if s.startswith(prefix) else s
 
@@ -135,21 +138,21 @@ class Clause(list):
             if not isinstance(lit, Literal):
                 raise TypeError('Clause can contain only Literal-s')
 
-    def toString(self):
+    def toString(self) -> str:
         """ Vrati textovu reprezentaciu tejto klauzy (vid zadanie). """
         return ' '.join(lit.toString() for lit in self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.toString()
 
-    def isSatisfied(self, v):
+    def isSatisfied(self, v : Valuation) -> bool:
         """ Urci, ci je tato klauza splnena ohodnotenim v. """
         for lit in self:
             if lit.isSatisfied(v):
                 return True
         return False
 
-    def writeToFile(self, oFile, varMap):
+    def writeToFile(self, oFile : TextIO, varMap : Mapping[str, int]):
         """ Zapise klauzu do suboru outFile v DIMACS formate
             pricom pouzije varMap na zakodovanie premennych na cisla.
 
@@ -161,7 +164,7 @@ class Clause(list):
         oFile.write(' 0\n')
 
     @staticmethod
-    def readFromFile(inFile, varMap):
+    def readFromFile(inFile : TextIO, varMap : VariableMap) -> 'Clause':
         """ Nacita novu klauzu zo suboru inFile a vrati ju ako vysledok.
         Mozete predpokladat, ze klauza je samostatne na jednom riadku.
         Ak sa z aktualneho riadku na vstupe neda nacitat korektna klauza,
@@ -195,26 +198,26 @@ class Cnf(list):
             if not isinstance(cls, Clause):
                 raise TypeError('Cnf can contain only Clause-s')
 
-    def toString(self):
+    def toString(self) -> str:
         """ Vrati textovu reprezentaciu tejto formuly (vid zadanie). """
         return ''.join([ cls.toString() + '\n' for cls in self])
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.toString()
 
-    def isSatisfied(self, v):
+    def isSatisfied(self, v : Valuation) -> bool:
         """ Urci, ci je tato formula splnena ohodnotenim v. """
         for cls in self:
             if not cls.isSatisfied(v):
                 return False
         return True
 
-    def extendVarMap(self, varMap):
+    def extendVarMap(self, varMap : VariableMap):
         """ Rozsiri varMap o premenne v tejto formule. """
         for cls in self:
             cls.extendVarMap(varMap)
 
-    def writeToFile(self, oFile, varMap):
+    def writeToFile(self, oFile : TextIO, varMap : VariableMap):
         """ Zapise klauzu do suboru outFile v DIMACS formate
             pricom pouzije varMap na zakodovanie premennych na cisla
             a zapise kazdu klauzu na jeden riadok.
@@ -223,7 +226,7 @@ class Cnf(list):
             cls.writeToFile(oFile, varMap)
 
     @staticmethod
-    def readFromFile(inFile, varMap):
+    def readFromFile(inFile : TextIO, varMap : VariableMap) -> 'Cnf':
         """ Nacita novu formulu zo suboru inFile a vrati ju ako vysledok.
         Mozete predpokladat, ze kazda klauza je samostatne na jednom riadku.
         """

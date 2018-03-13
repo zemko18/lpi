@@ -5,6 +5,9 @@ import time
 import itertools
 import copy
 
+from typing import Set, Mapping, Iterable
+Valuation = Mapping[str, bool]
+
 """
     Testovaci program pre toCnf
 """
@@ -29,7 +32,7 @@ def printException():
         '-'*20)
     )
 
-def now():
+def now() -> float:
     try:
        return time.perf_counter() # >=3.3
     except AttributeError:
@@ -47,7 +50,7 @@ class Tester(object):
         self.size = 0
         self.time = 0
 
-    def compare(self, result, expected, msg):
+    def compare(self, result, expected, msg) -> bool:
         self.tested += 1
         if result == expected:
             self.passed += 1
@@ -69,24 +72,24 @@ class Tester(object):
         else:
             print("ERROR")
 
-    def cnfLitIsSatisfied(self, lit, v):
-        return bool(lit.neg) ^ bool(v[lit.name])
+    def cnfLitIsSatisfied(self, lit : Literal, v : Valuation) -> bool:
+        return bool(lit.neg) != bool(v[lit.name])
 
-    def cnfClauseIsSatisfied(self, cls, v):
+    def cnfClauseIsSatisfied(self, cls : Clause, v : Valuation) -> bool:
         return any(self.cnfLitIsSatisfied(l, v) for l in cls)
 
-    def cnfIsSatisfied(self, cnf, v):
+    def cnfIsSatisfied(self, cnf : Cnf, v : Valuation) -> bool:
         return all(self.cnfClauseIsSatisfied(cls, v) for cls in cnf)
 
-    def formulaDeg(self, f):
+    def formulaDeg(self, f : Formula) -> int:
         if isinstance(f, Variable):
             return 0
         return sum(self.formulaDeg(sf) for sf in f.subf()) + 1
 
-    def cnfSize(self, cnf):
+    def cnfSize(self, cnf : Cnf) -> int:
         return sum(len(cls) for cls in cnf)
 
-    def formulaIsSatisfied(self, f, v):
+    def formulaIsSatisfied(self, f : Formula, v : Valuation):
         if   isinstance(f, Variable):
             return v[f.name()]
         elif isinstance(f, Negation):
@@ -102,7 +105,7 @@ class Tester(object):
         else:
             raise TypeError("Formula expected, got %s" % repr(f))
 
-    def formulaVars(self, f):
+    def formulaVars(self, f : Formula) -> Set[str]:
         """ List variables in formula f.
 
         This depends on correct implementation of subf() and Variable.name.
@@ -111,7 +114,7 @@ class Tester(object):
             return set([f.name()])
         return set.union(set(), *( self.formulaVars(sf) for sf in f.subf() ))
 
-    def cnfVars(self, cnf):
+    def cnfVars(self, cnf : Cnf) -> Set[str]:
         """ List variables in the Cnf formula cnf. """
         s = set()
         for cl in cnf:
@@ -119,7 +122,7 @@ class Tester(object):
                 s.add(lit.name)
         return s
 
-    def valuations(self, vars):
+    def valuations(self, vars) -> Iterable[Valuation]:
         """ Generate all possible valuations for vars. """
         vars = list(vars)
         ss = len(vars)
@@ -138,20 +141,20 @@ class Tester(object):
             v[vars[x]] = True
             yield v
 
-    def satisfiableFormula(self, f):
+    def satisfiableFormula(self, f : Formula) -> bool:
         """ Return True if f is satisfiable. """
         return any(self.formulaIsSatisfied(f, v) for v in self.valuations(self.formulaVars(f)))
 
-    def satisfiableCnf(self, cnf):
+    def satisfiableCnf(self, cnf : Cnf) -> bool:
         """ Return True if cnf is satisfiable. """
         return any(self.cnfIsSatisfied(cnf, v) for v in self.valuations(self.cnfVars(cnf)))
 
 
-    def test(self, f):
+    def test(self, f : Formula) -> None:
         self.case += 1
         self.tested += 1
         print("CASE %d: %s" % (self.case, f.toString()))
-        cnf = []
+        cnf = Cnf()
         try:
             start = now()
             cnf = f.toCnf()
@@ -324,7 +327,7 @@ try:
     S = 2
     t.test2(
             Conjunction([
-                Disjunction(vars)
+                Disjunction(list(vars))
                     for vars in itertools.permutations(
                         [Var(str(i)) for i in range(V)], S)
             ]))
@@ -332,14 +335,14 @@ try:
     # toto by bolo faaaakt vela s test2 ;)
     t.test(
             Disjunction([
-                Conjunction(vars)
+                Conjunction(list(vars))
                     for vars in itertools.permutations(
                         [Var(str(i)) for i in range(V)], S)
             ]))
 
     t.test2(
             Conjunction([
-                Not(Disjunction(vars))
+                Not(Disjunction(list(vars)))
                     for vars in itertools.permutations(
                         [Var(str(i)) for i in range(V)], S)
             ]))
@@ -347,7 +350,7 @@ try:
     # toto by bolo faaaakt vela s test2 ;)
     t.test(
             Disjunction([
-                Not(Conjunction(vars))
+                Not(Conjunction(list(vars)))
                     for vars in itertools.permutations(
                         [Var(str(i)) for i in range(V)], S)
             ]))
