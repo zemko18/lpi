@@ -46,7 +46,7 @@ Tieto podmienky sú súčasťou [podmienok na absolvovanie tohoto predmetu](http
 
 ### Čitateľnosť a rozsah
 
-Riešenia teoretickej časti sád úloh je potrebné vypracovať v čitateľnej forme
-a primerane malom rozsahu. Vyhradzujeme si právo vrátiť nečitateľné alebo
-príliš rozsiahle riešenia, pričom 1-krát za semester má študent právo vrátené
-riešenie prepracovať a znova odovzdať do 3 dní.
+Riešenia teoretickej časti sád úloh je potrebné vypracovať v čitateľnej
+forme a primerane malom rozsahu. Vyhradzujeme si právo vrátiť nečitateľné
+alebo príliš rozsiahle riešenia. Toto vrátenie sa počíta rovnako, ako keby
+bolo riešenie hodnotené menej ako 50 %-ami bodov.
