@@ -27,6 +27,7 @@ Sady úloh
   a [praktická časť (Sudoku)](cvicenia/cv03)
 * Sada úloh 4: [teoretická časť (CNF a tablá)](ulohy/su04.pdf)
   a [praktická časť (toCnf)](cvicenia/cv04)
+* Sada úloh 5: [teoretická časť (splniteľnosť a falzifikovateľnosť v tablách)](ulohy/su05.pdf)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
