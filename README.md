@@ -30,6 +30,7 @@ Sady úloh
 * Sada úloh 5: [teoretická časť (splniteľnosť a falzifikovateľnosť v tablách)](ulohy/su05.pdf)
   a [praktická časť (rodinka)](cvicenia/cv05)
 * Sada úloh 6: [teoretická časť (korektné pravidlá a rezolvencia)](ulohy/su06.pdf)
+  a [praktická časť (tablá)](cvicenia/cv06)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
