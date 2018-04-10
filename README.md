@@ -32,6 +32,7 @@ Sady úloh
 * Sada úloh 6: [teoretická časť (korektné pravidlá a rezolvencia)](ulohy/su06.pdf)
   a [praktická časť (tablá)](cvicenia/cv06)
 * Sada úloh 7: [teoretická časť (DPLL a prvorádová formalizácia)](ulohy/su07.pdf)
+  a [praktická časť (Agatha)](cvicenia/cv07)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
