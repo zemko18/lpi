@@ -34,6 +34,7 @@ Sady úloh
 * Sada úloh 7: [teoretická časť (DPLL a prvorádová formalizácia)](ulohy/su07.pdf)
   a [praktická časť (Agatha)](cvicenia/cv07)
 * Sada úloh 8: [teoretická časť (definície a štruktúry)](ulohy/su08.pdf)
+  a [praktická časť (SAT solver)](cvicenia/cv08)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
