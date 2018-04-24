@@ -36,6 +36,7 @@ Sady úloh
 * Sada úloh 8: [teoretická časť (definície a štruktúry)](ulohy/su08.pdf)
   a [praktická časť (SAT solver)](cvicenia/cv08)
 * Sada úloh 9: [teoretická časť (štruktúry s funkčnými symbolmi, substitúcie, tablá)](ulohy/su09.pdf)
+  a [praktická časť (folFormula)](cvicenia/cv09)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
