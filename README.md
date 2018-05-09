@@ -38,6 +38,7 @@ Sady úloh
 * Sada úloh 9: [teoretická časť (štruktúry s funkčnými symbolmi, substitúcie, tablá)](ulohy/su09.pdf)
   a [praktická časť (folFormula)](cvicenia/cv09)
 * Sada úloh 10: [teoretická časť (prvorádové tablá s rovnosťou)](ulohy/su10.pdf)
+* Sada úloh 11: [teoretická časť (prvorádová rezolvencia)](ulohy/su11.pdf)
 
 [Zbierka úloh](ulohy/zbierka.pdf) obsahuje vzorové riešenia a ďalšie úlohy na precvičovanie.
 
